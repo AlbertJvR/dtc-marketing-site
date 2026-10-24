@@ -1,0 +1,185 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ServiceCard from '@components/ServiceCard.astro';
+import ImageSlot from '@components/ImageSlot.astro';
+import FounderCard from '@components/FounderCard.astro';
+import CTABand from '@components/CTABand.astro';
+import { CTA, SERVICES } from '@config/site';
+
+const PROCESS = [
+  {
+    title: 'Talk',
+    body: 'A call or a coffee. You explain the problem in your words; we ask the questions that decide whether software is the right fix, and what kind.',
+  },
+  {
+    title: 'Plan',
+    body: 'You get a short written plan: what is in, what is out, how it will be built, and a price. Nothing starts until you’ve read it and agreed.',
+  },
+  {
+    title: 'Build',
+    body: 'Work lands in small, visible steps. You see it running early and often, so course corrections happen while they’re still cheap.',
+  },
+  {
+    title: 'Launch and support',
+    body: 'We put it live, hand over the keys and the documentation, and stay on to host, maintain and improve it if you want us to.',
+  },
+] as const;
+
+const EXPECT = [
+  {
+    title: 'One person, start to finish',
+    body: 'The developer you talk to in the first call is the one who writes the code, deploys it and answers the phone afterwards.',
+  },
+  {
+    title: 'A written plan before any code',
+    body: 'Scope, approach and price on paper. If the plan changes, the paper changes first.',
+  },
+  {
+    title: 'Proven technology, not the latest thing',
+    body: '.NET, PostgreSQL, React and Cloudflare. Tools with long support lives, so what we build is still maintainable in ten years.',
+  },
+  {
+    title: 'Built in New Zealand, supported in New Zealand',
+    body: 'Same time zone, same working hours, same understanding of how business is done here.',
+  },
+] as const;
+---
+
+<BaseLayout path="/">
+  <!-- Hero -->
+  <section class="mx-auto max-w-6xl px-4 pb-16 pt-16 sm:px-6 sm:pb-24 sm:pt-24 lg:px-8">
+    <p class="eyebrow"><span class="eyebrow-mark"></span>Software development · New Zealand</p>
+    <h1 class="mt-5 max-w-4xl text-title-md font-bold tracking-tight text-gray-900 sm:text-title-lg lg:text-title-xl">
+      Software built properly, by the person you talk to.
+    </h1>
+    <p class="mt-6 max-w-2xl text-lg leading-8 text-gray-600">
+      Deploy the Camel is a small New Zealand software studio. We design, build and run
+      websites, web applications and bespoke business systems, from a five-page site to the
+      system your company runs on.
+    </p>
+    <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+      <a href={CTA.href} class="btn btn-primary btn-lg w-full sm:w-auto">{CTA.label}</a>
+      <a href="/work" class="btn btn-outline btn-lg w-full sm:w-auto">See our work</a>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section aria-labelledby="services-heading" class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p class="eyebrow"><span class="eyebrow-mark"></span>What we do</p>
+        <h2 id="services-heading" class="mt-4 text-title-sm font-bold tracking-tight text-gray-900 sm:text-title-md">
+          Four ways to work with us
+        </h2>
+      </div>
+      <a href="/services" class="link text-theme-sm">All services in detail</a>
+    </div>
+    <div class="mt-10 grid gap-x-10 gap-y-12 sm:grid-cols-2">
+      {
+        SERVICES.map((s, i) => (
+          <ServiceCard index={i} title={s.title} summary={s.summary} href={`/services#${s.id}`} />
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- How we work -->
+  <section aria-labelledby="process-heading" class="border-y border-gray-200 bg-gray-50">
+    <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+      <p class="eyebrow"><span class="eyebrow-mark"></span>How we work</p>
+      <h2 id="process-heading" class="mt-4 max-w-2xl text-title-sm font-bold tracking-tight text-gray-900 sm:text-title-md">
+        Four steps, no surprises
+      </h2>
+      <ol class="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          PROCESS.map((step, i) => (
+            <li class="relative">
+              <span class="flex h-9 w-9 items-center justify-center rounded-full border border-gray-300 bg-white text-theme-sm font-bold tabular-nums text-gray-900">
+                {i + 1}
+              </span>
+              <h3 class="mt-4 text-theme-xl font-bold tracking-tight text-gray-900">{step.title}</h3>
+              <p class="mt-2 text-base leading-7 text-gray-600">{step.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- What to expect -->
+  <section aria-labelledby="expect-heading" class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+    <div class="grid gap-10 lg:grid-cols-[1fr_1.6fr]">
+      <div>
+        <p class="eyebrow"><span class="eyebrow-mark"></span>What to expect</p>
+        <h2 id="expect-heading" class="mt-4 text-title-sm font-bold tracking-tight text-gray-900 sm:text-title-md">
+          The way a small studio should work
+        </h2>
+        <p class="mt-4 text-base leading-7 text-gray-600">
+          No account managers, no hand-offs, no surprises on the invoice. Just the work,
+          done well, by someone who will still be around next year.
+        </p>
+      </div>
+      <dl class="divide-y divide-gray-200 border-y border-gray-200">
+        {
+          EXPECT.map((item) => (
+            <div class="grid gap-2 py-6 sm:grid-cols-[1fr_1.4fr] sm:gap-8">
+              <dt class="text-base font-bold tracking-tight text-gray-900">{item.title}</dt>
+              <dd class="text-base leading-7 text-gray-600">{item.body}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <!-- Featured work -->
+  <section aria-labelledby="work-heading" class="border-y border-gray-200 bg-gray-50">
+    <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+      <div class="grid items-center gap-10 lg:grid-cols-2">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-mark"></span>Recent work</p>
+          <h2 id="work-heading" class="mt-4 text-title-sm font-bold tracking-tight text-gray-900 sm:text-title-md">
+            Hutvista
+          </h2>
+          <p class="mt-4 text-base leading-7 text-gray-600">
+            Booking, catering and billing software for camps and retreat venues, built from
+            scratch and running in production. Enquiries, group bookings, kitchen menus,
+            invoices and season reports in one place, for venues that used to run on email,
+            spreadsheets and a whiteboard.
+          </p>
+          <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+            <a href="/work#hutvista" class="btn btn-primary btn-md w-full sm:w-auto">Read the case study</a>
+            <a href="https://hutvista.com" rel="noopener" class="btn btn-outline btn-md w-full sm:w-auto">Visit hutvista.com</a>
+          </div>
+        </div>
+        <ImageSlot
+          src="/images/work/hutvista.png"
+          alt="The Hutvista bookings calendar showing a month of confirmed and tentative group bookings"
+          class="shadow-theme-lg"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Founder -->
+  <section aria-labelledby="founder-heading" class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+    <div class="grid gap-10 lg:grid-cols-[1fr_1.6fr]">
+      <div>
+        <p class="eyebrow"><span class="eyebrow-mark"></span>Who you’ll work with</p>
+        <h2 id="founder-heading" class="mt-4 text-title-sm font-bold tracking-tight text-gray-900 sm:text-title-md">
+          A developer, not a sales team
+        </h2>
+      </div>
+      <div>
+        <FounderCard variant="full" />
+        <p class="mt-6 text-base leading-7 text-gray-600">
+          Albert founded Deploy the Camel to build software the way he would want it built for
+          his own business: planned on paper, built on proven tools, and supported by the
+          person who wrote it. <a href="/about" class="link">More about the studio</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <CTABand />
+</BaseLayout>

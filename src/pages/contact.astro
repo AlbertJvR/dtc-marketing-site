@@ -1,0 +1,51 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ContactForm from '@components/ContactForm.astro';
+import FounderCard from '@components/FounderCard.astro';
+---
+
+<BaseLayout
+  path="/contact"
+  title="Contact"
+  description="Start a project with Deploy the Camel. Tell us what you’re trying to do and you’ll get a straight answer from the developer who would build it."
+>
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+    <div class="grid gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-20">
+      <div>
+        <p class="eyebrow"><span class="eyebrow-mark"></span>Contact</p>
+        <h1 class="mt-5 text-title-md font-bold tracking-tight text-gray-900 sm:text-title-lg">
+          Tell us what you’re trying to do.
+        </h1>
+        <p class="mt-5 text-base leading-7 text-gray-600">
+          A few lines is enough. You’ll get a reply from Albert, usually within two working
+          days, with an honest view of whether we can help and what the next step would be.
+        </p>
+
+        <div class="mt-10 border-t border-gray-200 pt-8">
+          <FounderCard variant="full" />
+        </div>
+
+        <dl class="mt-10 space-y-5 border-t border-gray-200 pt-8 text-theme-sm">
+          <div>
+            <dt class="font-semibold text-gray-900">What happens next</dt>
+            <dd class="mt-1 leading-6 text-gray-600">
+              A short call to understand the problem, then a written plan with scope and
+              price. No obligation at either step.
+            </dd>
+          </div>
+          <div>
+            <dt class="font-semibold text-gray-900">Already have a system?</dt>
+            <dd class="mt-1 leading-6 text-gray-600">
+              We also take on support for software someone else built. Say so in the message
+              and tell us what it runs on.
+            </dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-theme-sm sm:p-8">
+        <ContactForm />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

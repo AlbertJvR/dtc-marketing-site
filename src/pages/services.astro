@@ -1,0 +1,160 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import CTABand from '@components/CTABand.astro';
+import { SERVICES } from '@config/site';
+
+/**
+ * Detail per service tier. Every claim here must be backed by something the studio
+ * has actually shipped (see CLAUDE.md → "Truth in copy"). `id` matches SERVICES so the
+ * home cards, footer and contact form all point at the same anchors.
+ */
+const DETAIL: Record<(typeof SERVICES)[number]['id'], { goodFor: string; get: string[]; built: string }> = {
+  websites: {
+    goodFor:
+      'A business that needs a site that loads fast, reads well on a phone, and turns visitors into enquiries. Marketing sites, product landing pages, a brochure site for a venue or a trade.',
+    get: [
+      'A static site: no server to patch, no plugin to update, nothing to be hacked through.',
+      'Mobile-first layout, with real attention to type, spacing and contrast.',
+      'A contact form that emails you, protected against spam, with no third-party form service.',
+      'Search engine basics done properly: titles, descriptions, sitemap, structured data, social previews.',
+      'Hosted on Cloudflare’s network, close to your visitors, with free SSL and a custom domain.',
+    ],
+    built: 'Astro and Tailwind CSS, deployed to Cloudflare Pages. This site is built the same way.',
+  },
+  'web-applications': {
+    goodFor:
+      'A team that needs a tool it logs in to every day: a customer portal, an admin back-office, an internal app, or a software product you want to sell.',
+    get: [
+      'Sign-in with roles and two-factor authentication, so the right people see the right things.',
+      'A responsive interface that works on the laptop in the office and the phone on site.',
+      'An API designed to last, so a mobile app or an integration can come later without a rewrite.',
+      'Automated tests on the parts that matter, so changes can be made with confidence.',
+      'Clear documentation and a hand-over you can give to another developer, if you ever need to.',
+    ],
+    built: 'A .NET back end on PostgreSQL, a React and TypeScript front end, OAuth 2.0 / OpenID Connect sign-in, containerised and deployed to a cloud host.',
+  },
+  'bespoke-systems': {
+    goodFor:
+      'A business whose work doesn’t fit off-the-shelf software: bookings with their own rules, billing that follows how you actually charge, reports the accountant keeps asking for, data that lives in three spreadsheets today.',
+    get: [
+      'A system shaped around your process, not a process reshaped around the system.',
+      'Bookings, quoting, invoicing, receipts and reporting, with PDF and CSV output where you need it.',
+      'Transactional email (confirmations, invoices, reminders) sent from your own domain.',
+      'Import of your existing records from spreadsheets or a previous system at go-live.',
+      'Multi-site or multi-tenant from day one if your business is structured that way.',
+    ],
+    built: 'The same .NET, PostgreSQL and React stack as our web applications, with an event-driven core where the domain calls for it. Hutvista is one of these.',
+  },
+  support: {
+    goodFor:
+      'Anyone who wants the thing they paid for to keep working. Also businesses with an existing system whose original developer has moved on.',
+    get: [
+      'Hosting, SSL, backups and monitoring for what we built, on a simple monthly arrangement.',
+      'Security and dependency updates applied as they come out, not when something breaks.',
+      'Small changes and fixes handled as part of the arrangement; larger pieces of work quoted separately.',
+      'A named person to email, who already knows the system.',
+    ],
+    built: 'Cloudflare for sites and edge, containerised cloud hosting for applications, Postmark for email delivery.',
+  },
+};
+---
+
+<BaseLayout
+  path="/services"
+  title="Services"
+  description="Websites, web applications, bespoke business systems, and ongoing support and hosting. What each one is good for, what you get, and how it’s built."
+>
+  <section class="mx-auto max-w-6xl px-4 pb-12 pt-16 sm:px-6 sm:pt-24 lg:px-8">
+    <p class="eyebrow"><span class="eyebrow-mark"></span>Services</p>
+    <h1 class="mt-5 max-w-3xl text-title-md font-bold tracking-tight text-gray-900 sm:text-title-lg">
+      From a simple website to the system your business runs on.
+    </h1>
+    <p class="mt-6 max-w-2xl text-lg leading-8 text-gray-600">
+      Four kinds of work, one way of working. Every project starts with a conversation and a
+      written plan, and every one is built by the same person you planned it with.
+    </p>
+    <nav aria-label="On this page" class="mt-10 flex flex-wrap gap-2">
+      {
+        SERVICES.map((s, i) => (
+          <a href={`#${s.id}`} class="rounded-full border border-gray-300 bg-white px-4 py-1.5 text-theme-sm font-medium text-gray-800 hover:border-gray-900">
+            <span class="mr-1.5 text-brand-600">{String(i + 1).padStart(2, '0')}</span>
+            {s.title}
+          </a>
+        ))
+      }
+      <a href="#pricing" class="rounded-full border border-gray-300 bg-white px-4 py-1.5 text-theme-sm font-medium text-gray-800 hover:border-gray-900">
+        How pricing works
+      </a>
+    </nav>
+  </section>
+
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    {
+      SERVICES.map((s, i) => {
+        const d = DETAIL[s.id];
+        return (
+          <section id={s.id} aria-labelledby={`${s.id}-heading`} class="scroll-mt-24 border-t border-gray-300 py-14 sm:py-16">
+            <div class="grid gap-8 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
+              <div>
+                <span class="text-theme-sm font-semibold tabular-nums text-brand-600">{String(i + 1).padStart(2, '0')}</span>
+                <h2 id={`${s.id}-heading`} class="mt-3 text-title-sm font-bold tracking-tight text-gray-900 sm:text-title-md">
+                  {s.title}
+                </h2>
+                <p class="mt-4 text-base leading-7 text-gray-600">{s.summary}</p>
+              </div>
+              <div class="space-y-8">
+                <div>
+                  <h3 class="text-theme-xs font-semibold uppercase tracking-[0.14em] text-gray-500">Good for</h3>
+                  <p class="mt-3 text-base leading-7 text-gray-700">{d.goodFor}</p>
+                </div>
+                <div>
+                  <h3 class="text-theme-xs font-semibold uppercase tracking-[0.14em] text-gray-500">What you get</h3>
+                  <ul class="mt-3 space-y-2.5">
+                    {d.get.map((line) => (
+                      <li class="flex gap-3 text-base leading-7 text-gray-700">
+                        <span class="mt-3 h-px w-4 shrink-0 bg-brand-500" aria-hidden="true" />
+                        <span>{line}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h3 class="text-theme-xs font-semibold uppercase tracking-[0.14em] text-gray-500">How it’s built</h3>
+                  <p class="mt-3 text-base leading-7 text-gray-700">{d.built}</p>
+                </div>
+              </div>
+            </div>
+          </section>
+        );
+      })
+    }
+
+    <section id="pricing" aria-labelledby="pricing-heading" class="scroll-mt-24 border-t border-gray-300 py-14 sm:py-16">
+      <div class="grid gap-8 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
+        <div>
+          <h2 id="pricing-heading" class="text-title-sm font-bold tracking-tight text-gray-900 sm:text-title-md">
+            How pricing works
+          </h2>
+        </div>
+        <div class="space-y-5 text-base leading-7 text-gray-700">
+          <p>
+            Every project is quoted in writing after we’ve talked, as part of the plan. Where
+            the scope is fixed, the price is fixed. Where it genuinely can’t be, we agree a
+            budget and a cadence, and you see what has been spent at every step.
+          </p>
+          <p>
+            Support and hosting is a flat monthly amount agreed up front, sized to the system.
+            There are no lock-in contracts: you own the code, the data and the accounts, and
+            you can take them elsewhere at any time.
+          </p>
+          <p>
+            If you want a number before a conversation, <a href="/contact" class="link">send a few lines about the project</a>
+            and you’ll get an honest range back.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <CTABand />
+</BaseLayout>

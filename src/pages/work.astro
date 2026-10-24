@@ -1,0 +1,119 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ImageSlot from '@components/ImageSlot.astro';
+import CTABand from '@components/CTABand.astro';
+
+/**
+ * Case studies. Only shipped, public work appears here. Hutvista is the studio's own
+ * product and is in production; other projects are added as they ship and as their
+ * owners agree (see CLAUDE.md → locked decisions).
+ */
+const HUTVISTA_BUILT = [
+  'Lead capture from a public enquiry form, into a pipeline the camp works through.',
+  'Group bookings with availability, tentative holds, seasonal pricing, promo codes and overflow venues.',
+  'Catering: recipe and dietary catalogs, per-booking dietary profiles, and a menu-selection link the group fills in without a login.',
+  'Billing worksheets, deposit and final invoices, receipts and credit notes, all as branded PDFs.',
+  'Cash, earnings, outstanding and lead-conversion reports, exportable to PDF and CSV.',
+  'Transactional email with per-camp templates, sent from the camp’s own domain.',
+  'Multi-venue, multi-tenant, with per-tenant time zone and locale, role-based access and two-factor sign-in.',
+  'A one-shot import of each camp’s existing bookings and customers from spreadsheets at onboarding.',
+  'A per-camp brochure website wired straight into the booking system, plus the product’s own marketing site.',
+] as const;
+
+const HUTVISTA_STACK = [
+  ['Back end', '.NET on PostgreSQL, containerised'],
+  ['Admin portal', 'React and TypeScript'],
+  ['Sign-in', 'OAuth 2.0 / OpenID Connect via our own identity server'],
+  ['Email', 'Postmark'],
+  ['Public sites', 'Astro on Cloudflare Pages'],
+] as const;
+---
+
+<BaseLayout
+  path="/work"
+  title="Work"
+  description="Case studies from Deploy the Camel: Hutvista, booking, catering and billing software for camps and retreat venues, built from scratch and running in production."
+>
+  <section class="mx-auto max-w-6xl px-4 pb-12 pt-16 sm:px-6 sm:pt-24 lg:px-8">
+    <p class="eyebrow"><span class="eyebrow-mark"></span>Work</p>
+    <h1 class="mt-5 max-w-3xl text-title-md font-bold tracking-tight text-gray-900 sm:text-title-lg">
+      Things we’ve built and still look after.
+    </h1>
+    <p class="mt-6 max-w-2xl text-lg leading-8 text-gray-600">
+      Only shipped, in-production work appears here. More case studies will follow as projects
+      go live and their owners are happy to be named.
+    </p>
+  </section>
+
+  <article id="hutvista" aria-labelledby="hutvista-heading" class="scroll-mt-24 border-t border-gray-300">
+    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
+      <div class="grid gap-10 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
+        <div>
+          <p class="text-theme-sm font-semibold text-brand-600">Software product · In production</p>
+          <h2 id="hutvista-heading" class="mt-3 text-title-sm font-bold tracking-tight text-gray-900 sm:text-title-md">
+            Hutvista
+          </h2>
+          <p class="mt-4 text-base leading-7 text-gray-600">
+            Booking, catering and billing software for camps and retreat venues in New Zealand.
+          </p>
+          <a href="https://hutvista.com" rel="noopener" class="link mt-4 inline-block text-theme-sm">hutvista.com</a>
+
+          <dl class="mt-10 divide-y divide-gray-200 border-y border-gray-200 text-theme-sm">
+            {
+              HUTVISTA_STACK.map(([k, v]) => (
+                <div class="grid grid-cols-[6rem_1fr] gap-4 py-3">
+                  <dt class="font-semibold text-gray-900">{k}</dt>
+                  <dd class="text-gray-600">{v}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+
+        <div class="space-y-10">
+          <ImageSlot
+            src="/images/work/hutvista.png"
+            alt="The Hutvista bookings calendar showing a month of confirmed and tentative group bookings"
+            caption="The bookings calendar: what’s booked, what’s held, what’s free."
+          />
+
+          <div>
+            <h3 class="text-theme-xs font-semibold uppercase tracking-[0.14em] text-gray-500">The problem</h3>
+            <p class="mt-3 text-base leading-7 text-gray-700">
+              A camp hosts school groups, church groups and corporate retreats. Enquiries arrive
+              by email, phone and web form. Bookings live on a whiteboard, the kitchen’s dietary
+              list on a clipboard, pricing in someone’s head, and invoices in a spreadsheet. The
+              group that enquired yesterday books with whichever venue replied first.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-theme-xs font-semibold uppercase tracking-[0.14em] text-gray-500">What we built</h3>
+            <ul class="mt-3 space-y-2.5">
+              {
+                HUTVISTA_BUILT.map((line) => (
+                  <li class="flex gap-3 text-base leading-7 text-gray-700">
+                    <span class="mt-3 h-px w-4 shrink-0 bg-brand-500" aria-hidden="true" />
+                    <span>{line}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-theme-xs font-semibold uppercase tracking-[0.14em] text-gray-500">How it was done</h3>
+            <p class="mt-3 text-base leading-7 text-gray-700">
+              Designed and built as a series of planned, documented epics, each with its own
+              automated tests, and shipped to production one at a time. The same design
+              document that planned the first module still drives the roadmap today, which is
+              what lets one developer run a product this size.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <CTABand heading="Want something like this for your business?" />
+</BaseLayout>

@@ -1,0 +1,47 @@
+---
+/**
+ * Image slot for work screenshots and photos. Renders the real image from `public/`
+ * when the file exists at build time; otherwise a clearly labelled placeholder panel
+ * showing the expected path. Never renders fabricated UI. The check resolves from
+ * process.cwd() (the project root under both `astro dev` and `astro build`).
+ */
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
+
+interface Props {
+  /** Site-absolute path, e.g. "/images/work/hutvista.png". */
+  src: string;
+  /** Descriptive alt text for the real image (also shown in the placeholder). */
+  alt: string;
+  /** Optional visible caption under the image. */
+  caption?: string;
+  /** Aspect ratio for the placeholder so layouts don't jump when the image lands. */
+  ratio?: 'wide' | 'screen' | 'square';
+  class?: string;
+}
+
+const { src, alt, caption, ratio = 'screen', class: className } = Astro.props;
+const exists = existsSync(join(process.cwd(), 'public', src));
+const ratioClass = { wide: 'aspect-[2/1]', screen: 'aspect-[16/10]', square: 'aspect-square' }[ratio];
+---
+
+<figure class:list={['overflow-hidden rounded-xl border border-gray-200 bg-white', className]}>
+  {
+    exists ? (
+      <img src={src} alt={alt} loading="lazy" decoding="async" class="block w-full" />
+    ) : (
+      <div
+        class:list={['flex flex-col items-center justify-center gap-2 bg-gray-50 p-6 text-center', ratioClass]}
+        role="img"
+        aria-label={`Image placeholder: ${alt}`}
+      >
+        <span class="rounded-full border border-dashed border-brand-300 bg-brand-25 px-3 py-1 text-theme-xs font-semibold uppercase tracking-wide text-brand-600">
+          Image coming
+        </span>
+        <span class="max-w-md text-theme-sm text-gray-600">{alt}</span>
+        <code class="text-theme-xs text-gray-400">{src}</code>
+      </div>
+    )
+  }
+  {caption && <figcaption class="border-t border-gray-100 px-5 py-3 text-theme-sm text-gray-600">{caption}</figcaption>}
+</figure>

@@ -1,0 +1,115 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import FounderCard from '@components/FounderCard.astro';
+import CTABand from '@components/CTABand.astro';
+
+const STACK = [
+  ['C# and .NET', 'Back ends and APIs. Long-term support releases, a serious type system, and a runtime that is boring in the best way.'],
+  ['PostgreSQL', 'The database for everything. Reliable, free, and it will still be here in twenty years.'],
+  ['React and TypeScript', 'Front ends for applications: the portals and back-offices people log in to.'],
+  ['Astro and Tailwind CSS', 'Websites. Static output, no JavaScript framework shipped to the browser unless a page needs it.'],
+  ['Cloudflare', 'Hosting for sites, DNS, SSL, edge functions and bot protection.'],
+  ['OAuth 2.0 / OpenID Connect', 'Sign-in, roles and two-factor authentication through our own identity server, shared across the products we run.'],
+  ['Postmark', 'Transactional email that reaches the inbox.'],
+  ['Docker', 'Every application ships as a container, so it runs the same on a laptop and in the cloud.'],
+] as const;
+
+const HOW = [
+  {
+    title: 'Plan on paper first',
+    body: 'Every piece of work starts as a written plan with the decisions spelled out. Code follows the plan; when the plan changes, the document changes first. It is how a one-person studio ships systems that would normally take a team.',
+  },
+  {
+    title: 'Only claim what has shipped',
+    body: 'Nothing on this site, or in a proposal, describes something we haven’t actually built and run. If a feature is still an idea, it is called an idea.',
+  },
+  {
+    title: 'Test what matters',
+    body: 'Automated tests on the business rules and the user journeys, run on every change. Not for coverage numbers, but so that a change made in year three doesn’t break something from year one.',
+  },
+  {
+    title: 'Hand over properly',
+    body: 'You own the code, the data and the accounts. The documentation is written so another developer could pick it up. We would rather earn the next job than lock you in.',
+  },
+] as const;
+---
+
+<BaseLayout
+  path="/about"
+  title="About"
+  description="Deploy the Camel is a one-person New Zealand software studio founded by Albert Janse v Rensburg. How we work, and what we build with."
+>
+  <section class="mx-auto max-w-6xl px-4 pb-12 pt-16 sm:px-6 sm:pt-24 lg:px-8">
+    <p class="eyebrow"><span class="eyebrow-mark"></span>About</p>
+    <h1 class="mt-5 max-w-3xl text-title-md font-bold tracking-tight text-gray-900 sm:text-title-lg">
+      A small studio that builds the whole thing.
+    </h1>
+    <p class="mt-6 max-w-2xl text-lg leading-8 text-gray-600">
+      Deploy the Camel is the software studio of Albert Janse v Rensburg, based in New
+      Zealand. Projects are planned, built, deployed and supported by the founder, start to
+      finish. That means fewer people to explain things to, and one person who knows the
+      whole system when something needs to change.
+    </p>
+  </section>
+
+  <section aria-labelledby="founder-heading" class="border-t border-gray-300">
+    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
+      <div class="grid gap-8 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
+        <h2 id="founder-heading" class="text-title-sm font-bold tracking-tight text-gray-900">The founder</h2>
+        <div>
+          <FounderCard variant="full" />
+          <p class="mt-6 text-base leading-7 text-gray-700">
+            Albert designs and builds business software: the back ends, the databases, the
+            sign-in, the user interfaces and the sites in front of them. Hutvista, the camp
+            management product on the <a href="/work" class="link">work page</a>, is his, from the first
+            design document to the production deploys.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="how-heading" class="border-t border-gray-300 bg-gray-50">
+    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
+      <div class="grid gap-8 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
+        <h2 id="how-heading" class="text-title-sm font-bold tracking-tight text-gray-900">How we build</h2>
+        <dl class="divide-y divide-gray-200 border-y border-gray-200">
+          {
+            HOW.map((item) => (
+              <div class="py-6">
+                <dt class="text-base font-bold tracking-tight text-gray-900">{item.title}</dt>
+                <dd class="mt-2 text-base leading-7 text-gray-600">{item.body}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="stack-heading" class="border-t border-gray-300">
+    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
+      <div class="grid gap-8 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
+        <div>
+          <h2 id="stack-heading" class="text-title-sm font-bold tracking-tight text-gray-900">What we build with</h2>
+          <p class="mt-4 text-base leading-7 text-gray-600">
+            A deliberately short list. Each of these has been in production for years and will
+            be supported for years more, which matters more than whatever is new this month.
+          </p>
+        </div>
+        <dl class="grid gap-x-8 gap-y-6 sm:grid-cols-2">
+          {
+            STACK.map(([name, why]) => (
+              <div class="border-t border-gray-200 pt-4">
+                <dt class="text-base font-bold tracking-tight text-gray-900">{name}</dt>
+                <dd class="mt-1.5 text-theme-sm leading-6 text-gray-600">{why}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <CTABand />
+</BaseLayout>

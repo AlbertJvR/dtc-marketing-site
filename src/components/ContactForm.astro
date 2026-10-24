@@ -1,0 +1,123 @@
+---
+import { SERVICES, TURNSTILE_SITE_KEY } from '@config/site';
+const hasTurnstile = Boolean(TURNSTILE_SITE_KEY);
+---
+
+<form id="contact-form" class="space-y-5" novalidate>
+  <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+    <div>
+      <label for="name" class="mb-1.5 block text-theme-sm font-medium text-gray-800">
+        Your name <span class="text-error-500">*</span>
+      </label>
+      <input id="name" name="name" type="text" required autocomplete="name" class="field" />
+    </div>
+    <div>
+      <label for="company" class="mb-1.5 block text-theme-sm font-medium text-gray-800">
+        Company <span class="text-gray-400">(optional)</span>
+      </label>
+      <input id="company" name="company" type="text" autocomplete="organization" class="field" />
+    </div>
+    <div>
+      <label for="email" class="mb-1.5 block text-theme-sm font-medium text-gray-800">
+        Email <span class="text-error-500">*</span>
+      </label>
+      <input id="email" name="email" type="email" required autocomplete="email" class="field" />
+    </div>
+    <div>
+      <label for="phone" class="mb-1.5 block text-theme-sm font-medium text-gray-800">
+        Phone <span class="text-gray-400">(optional)</span>
+      </label>
+      <input id="phone" name="phone" type="tel" autocomplete="tel" class="field" />
+    </div>
+  </div>
+
+  <div>
+    <label for="projectType" class="mb-1.5 block text-theme-sm font-medium text-gray-800">
+      What are you after?
+    </label>
+    <select id="projectType" name="projectType" class="field">
+      <option value="">Select…</option>
+      {SERVICES.map((s) => <option value={s.title}>{s.title}</option>)}
+      <option value="Not sure yet">Not sure yet</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="message" class="mb-1.5 block text-theme-sm font-medium text-gray-800">
+      Tell us about the project <span class="text-error-500">*</span>
+    </label>
+    <textarea
+      id="message"
+      name="message"
+      rows="6"
+      required
+      placeholder="What are you trying to do, who is it for, and is there a date you’re working towards? Rough is fine."
+      class="field"
+    ></textarea>
+  </div>
+
+  <!-- Honeypot: hidden from humans, catches naive bots. Do not remove. -->
+  <div class="absolute left-[-9999px]" aria-hidden="true">
+    <label for="website">Leave this field empty</label>
+    <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+  </div>
+
+  {hasTurnstile && <div class="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-theme="light"></div>}
+
+  <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+    <button type="submit" id="contact-submit" class="btn btn-primary btn-lg w-full sm:w-auto">Send enquiry</button>
+    <p id="form-status" class="text-theme-sm" role="status" aria-live="polite"></p>
+  </div>
+</form>
+
+{hasTurnstile && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const status = document.getElementById('form-status');
+  const submit = document.getElementById('contact-submit') as HTMLButtonElement | null;
+  const turnstile = () => (window as unknown as { turnstile?: { reset: () => void } }).turnstile;
+
+  function setStatus(message: string, ok: boolean | null) {
+    if (!status) return;
+    status.textContent = message;
+    status.classList.remove('text-success-600', 'text-error-600', 'text-gray-500');
+    status.classList.add(ok === true ? 'text-success-600' : ok === false ? 'text-error-600' : 'text-gray-500');
+  }
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const data = Object.fromEntries(new FormData(form).entries());
+    submit?.setAttribute('disabled', 'true');
+    setStatus('Sending…', null);
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (res.ok) {
+        form.reset();
+        turnstile()?.reset();
+        setStatus('Thanks — your enquiry is in. You’ll hear back from Albert soon.', true);
+      } else if (res.status === 429) {
+        setStatus('Too many attempts. Please try again in a few minutes.', false);
+      } else if (res.status === 403) {
+        setStatus('We couldn’t verify you’re human. Please retry the check and resend.', false);
+        turnstile()?.reset();
+      } else {
+        setStatus('Something went wrong sending your enquiry. Please email us directly instead.', false);
+      }
+    } catch {
+      setStatus('Network error. Please check your connection or email us directly.', false);
+    } finally {
+      submit?.removeAttribute('disabled');
+    }
+  });
+</script>
