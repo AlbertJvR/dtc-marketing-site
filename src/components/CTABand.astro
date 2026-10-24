@@ -1,0 +1,36 @@
+---
+import { CTA, FOUNDER } from '@config/site';
+
+/**
+ * Closing call-to-action band. Ink panel, one primary button, an email fallback for
+ * people who would rather not fill in a form.
+ */
+interface Props {
+  heading?: string;
+  body?: string;
+}
+const {
+  heading = 'Have a project in mind?',
+  body = 'Tell us what you’re trying to do. You’ll get a straight answer about whether we can help, what it would take, and roughly what it would cost.',
+} = Astro.props;
+---
+
+<section class="px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+  <div class="mx-auto max-w-6xl rounded-2xl bg-gray-900 px-6 py-12 sm:px-12 sm:py-16">
+    <div class="grid items-center gap-8 md:grid-cols-[1.4fr_1fr]">
+      <div>
+        <h2 class="text-title-sm font-bold tracking-tight text-white sm:text-title-md">{heading}</h2>
+        <p class="mt-4 max-w-xl text-base leading-7 text-gray-300">{body}</p>
+      </div>
+      <div class="flex flex-col gap-3 md:items-end">
+        <a href={CTA.href} class="btn btn-lg w-full bg-white text-gray-900 hover:bg-gray-100 md:w-auto">{CTA.label}</a>
+        <p class="text-theme-sm text-gray-400">
+          or email{' '}
+          <a href={`mailto:${FOUNDER.email}`} class="font-medium text-white underline decoration-brand-400 decoration-2 underline-offset-4 hover:decoration-brand-300">
+            {FOUNDER.email}
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

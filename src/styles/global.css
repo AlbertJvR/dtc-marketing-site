@@ -1,0 +1,169 @@
+/*
+ * Deploy the Camel — marketing-site design tokens.
+ *
+ * Structure mirrors the Hutvista marketing site (Tailwind v4, CSS-first @theme,
+ * self-hosted variable font), but the palette is this studio's own:
+ *
+ *   - Ink      (gray-900)  — headings, primary buttons. Warm near-black, not pure black.
+ *   - Warm gray scale       — body text, borders, section backgrounds. Slightly warm so the
+ *                             page reads like paper rather than a dashboard.
+ *   - Camel    (brand-*)    — the accent. Used sparingly: eyebrow labels, links, small marks,
+ *                             the focus ring. It is NOT the primary button colour; the primary
+ *                             button is ink, which keeps the page calm and the accent meaningful.
+ *
+ * Light-only, no dark-mode variant: use plain utilities (bg-gray-50, text-gray-700), no `dark:`.
+ */
+
+/* Self-hosted variable font: one request, no third-party chain. */
+@import "@fontsource-variable/manrope" layer(base);
+
+@import "tailwindcss";
+
+@theme {
+  --font-*: initial;
+  --font-sans: "Manrope Variable", Manrope, ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, sans-serif;
+
+  --breakpoint-*: initial;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+
+  --text-title-2xl: 72px;
+  --text-title-2xl--line-height: 80px;
+  --text-title-xl: 60px;
+  --text-title-xl--line-height: 66px;
+  --text-title-lg: 48px;
+  --text-title-lg--line-height: 54px;
+  --text-title-md: 36px;
+  --text-title-md--line-height: 42px;
+  --text-title-sm: 30px;
+  --text-title-sm--line-height: 36px;
+  --text-theme-xl: 20px;
+  --text-theme-xl--line-height: 30px;
+  --text-theme-sm: 14px;
+  --text-theme-sm--line-height: 20px;
+  --text-theme-xs: 12px;
+  --text-theme-xs--line-height: 18px;
+
+  --color-current: currentColor;
+  --color-transparent: transparent;
+  --color-white: #ffffff;
+  --color-black: #1b1916;
+
+  /* Camel — the accent. */
+  --color-brand-25: #fcf9f4;
+  --color-brand-50: #f8f1e7;
+  --color-brand-100: #f0e2cf;
+  --color-brand-200: #e3c9a6;
+  --color-brand-300: #d4ab79;
+  --color-brand-400: #c58f55;
+  --color-brand-500: #b57a40;
+  --color-brand-600: #986334;
+  --color-brand-700: #7a4f2b;
+  --color-brand-800: #614025;
+  --color-brand-900: #4e3520;
+  --color-brand-950: #2c1d11;
+
+  /* Warm gray — paper, not slate. */
+  --color-gray-25: #fcfbf9;
+  --color-gray-50: #f8f6f2;
+  --color-gray-100: #f1eee8;
+  --color-gray-200: #e5e0d7;
+  --color-gray-300: #d2cbbf;
+  --color-gray-400: #a69d90;
+  --color-gray-500: #7a7266;
+  --color-gray-600: #5d564c;
+  --color-gray-700: #45403a;
+  --color-gray-800: #2c2925;
+  --color-gray-900: #1b1916;
+  --color-gray-950: #121110;
+
+  --color-success-50: #eaf7ee;
+  --color-success-500: #2f8f5b;
+  --color-success-600: #257449;
+  --color-success-700: #1e5d3b;
+
+  --color-error-50: #fdeeec;
+  --color-error-500: #d2452f;
+  --color-error-600: #b33a27;
+  --color-error-700: #8f2f20;
+
+  --shadow-theme-xs: 0px 1px 2px 0px rgba(27, 25, 22, 0.05);
+  --shadow-theme-sm: 0px 1px 3px 0px rgba(27, 25, 22, 0.08), 0px 1px 2px 0px rgba(27, 25, 22, 0.05);
+  --shadow-theme-md: 0px 4px 8px -2px rgba(27, 25, 22, 0.08), 0px 2px 4px -2px rgba(27, 25, 22, 0.05);
+  --shadow-theme-lg: 0px 12px 16px -4px rgba(27, 25, 22, 0.08), 0px 4px 6px -2px rgba(27, 25, 22, 0.03);
+}
+
+@layer base {
+  /* Tailwind v4 defaults border-color to currentColor; use the warm gray instead. */
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans font-normal bg-white text-gray-600 antialiased;
+  }
+
+  ::selection {
+    background: var(--color-brand-100);
+    color: var(--color-gray-900);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+/* Buttons. Primary is ink, not camel — see the note at the top. */
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition
+    focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-500/25
+    disabled:cursor-not-allowed disabled:opacity-60;
+}
+@utility btn-primary {
+  @apply bg-gray-900 text-white hover:bg-gray-800;
+}
+@utility btn-outline {
+  @apply border border-gray-300 bg-white text-gray-900 hover:border-gray-400 hover:bg-gray-50;
+}
+@utility btn-ghost {
+  @apply text-gray-800 hover:bg-gray-100;
+}
+@utility btn-md {
+  @apply px-4 py-2.5 text-theme-sm;
+}
+@utility btn-lg {
+  @apply px-6 py-3 text-base;
+}
+
+/* Small uppercase section label with a camel tick in front. */
+@utility eyebrow {
+  @apply inline-flex items-center gap-2 text-theme-xs font-semibold uppercase tracking-[0.14em] text-brand-600;
+}
+@utility eyebrow-mark {
+  @apply inline-block h-px w-5 bg-brand-500;
+}
+
+/* Inline text link: ink with a camel underline. */
+@utility link {
+  @apply font-medium text-gray-900 underline decoration-brand-400 decoration-2 underline-offset-4 transition hover:decoration-brand-600;
+}
+
+/* Form controls on /contact. */
+@utility field {
+  @apply w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-theme-sm text-gray-900
+    placeholder:text-gray-400 focus:border-brand-400 focus:outline-none focus:ring-4 focus:ring-brand-500/20;
+}

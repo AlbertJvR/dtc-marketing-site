@@ -1,0 +1,35 @@
+{
+  "name": "dtc-marketing-site",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "lint": "eslint .",
+    "check": "astro check",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource-variable/manrope": "^5.2.0",
+    "@tailwindcss/vite": "^4.3.2",
+    "astro": "^7.3.2",
+    "tailwindcss": "^4.3.2",
+    "typescript": "^6.0.3"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240925.0",
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.1.1",
+    "eslint": "^10.7.0",
+    "eslint-plugin-astro": "^1.7.0",
+    "globals": "^17.7.0",
+    "typescript-eslint": "^8.63.0"
+  }
+}

@@ -1,0 +1,61 @@
+---
+import Logo from '@components/Logo.astro';
+import FounderCard from '@components/FounderCard.astro';
+import { NAV_LINKS, SERVICES, SITE_DESCRIPTION } from '@config/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-gray-200 bg-gray-50">
+  <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
+    <div class="grid gap-12 md:grid-cols-[1.3fr_1fr_1fr_1.4fr]">
+      <div class="max-w-sm">
+        <a href="/" aria-label="Deploy the Camel home" class="inline-block">
+          <Logo />
+        </a>
+        <p class="mt-4 text-theme-sm leading-6 text-gray-600">{SITE_DESCRIPTION}</p>
+      </div>
+
+      <div>
+        <h2 class="text-theme-xs font-semibold uppercase tracking-[0.14em] text-gray-500">Services</h2>
+        <ul class="mt-4 space-y-2.5">
+          {
+            SERVICES.map((s) => (
+              <li>
+                <a href={`/services#${s.id}`} class="text-theme-sm text-gray-700 hover:text-gray-900">
+                  {s.title}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-theme-xs font-semibold uppercase tracking-[0.14em] text-gray-500">Company</h2>
+        <ul class="mt-4 space-y-2.5">
+          {
+            NAV_LINKS.map((link) => (
+              <li>
+                <a href={link.href} class="text-theme-sm text-gray-700 hover:text-gray-900">
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-theme-xs font-semibold uppercase tracking-[0.14em] text-gray-500">Talk to a person</h2>
+        <div class="mt-4">
+          <FounderCard variant="compact" />
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-12 flex flex-col gap-2 border-t border-gray-200 pt-6 text-theme-xs text-gray-500 sm:flex-row sm:justify-between">
+      <p>&copy; {year} Deploy the Camel. All rights reserved.</p>
+      <p>Made in New Zealand.</p>
+    </div>
+  </div>
+</footer>

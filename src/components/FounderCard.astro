@@ -1,0 +1,56 @@
+---
+/**
+ * The person behind the studio — replaces a generic mailbox in the footer and on
+ * /contact. Details come from FOUNDER in src/config/site.ts. The headshot is a real
+ * file at FOUNDER.photo; a labelled placeholder renders until it exists.
+ */
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
+import { FOUNDER } from '@config/site';
+
+interface Props {
+  /** "compact" for the footer, "full" for the contact page. */
+  variant?: 'compact' | 'full';
+}
+const { variant = 'full' } = Astro.props;
+const hasPhoto = existsSync(join(process.cwd(), 'public', FOUNDER.photo));
+const photoSize = variant === 'full' ? 'h-24 w-24' : 'h-14 w-14';
+---
+
+<div class:list={['flex gap-4', variant === 'full' ? 'items-start' : 'items-center']}>
+  {
+    hasPhoto ? (
+      <img
+        src={FOUNDER.photo}
+        alt={`${FOUNDER.name}, ${FOUNDER.role}`}
+        width="96"
+        height="96"
+        loading="lazy"
+        class:list={['shrink-0 rounded-full object-cover', photoSize]}
+      />
+    ) : (
+      <span
+        class:list={[
+          'flex shrink-0 items-center justify-center rounded-full border border-dashed border-brand-300 bg-brand-25 text-center text-theme-xs font-medium text-brand-600',
+          photoSize,
+        ]}
+        role="img"
+        aria-label="Founder photo placeholder"
+      >
+        Photo
+      </span>
+    )
+  }
+  <div class="min-w-0">
+    <p class="text-base font-semibold text-gray-900">{FOUNDER.name}</p>
+    <p class="text-theme-sm text-gray-500">{FOUNDER.role}</p>
+    {
+      variant === 'full' && (
+        <p class="mt-2 text-base leading-7 text-gray-700">“{FOUNDER.promise}”</p>
+      )
+    }
+    <p class="mt-2">
+      <a href={`mailto:${FOUNDER.email}`} class="link text-theme-sm">{FOUNDER.email}</a>
+    </p>
+  </div>
+</div>
