@@ -18,7 +18,8 @@ This file is the design record. Add new decisions here; do not create separate p
 2. **Env prefix is `DTC_`** (`DTC_SITE_URL`, `DTC_CONTACT_EMAIL`, `DTC_TURNSTILE_SITE_KEY`).
    Function secrets are unprefixed and read from `context.env` only.
 3. **Brand** — no logo or palette existed, so this site defines them:
-   - Font: **Manrope** (variable, self-hosted). Not Outfit, to keep the studio visually
+   - Font: **Comfortaa** (variable, self-hosted via fontsource, weights 300–700; chosen
+     2026-10-25, replacing Manrope). Not Outfit, to keep the studio visually
      distinct from Hutvista.
    - Palette: warm gray "paper" neutrals, **ink** (`gray-900`) for headings and primary
      buttons, **camel** (`brand-*`, `#b57a40` at 500) as a sparing accent (eyebrow labels,

@@ -20,7 +20,7 @@ Primary CTA everywhere is **"Start a project"** → `/contact`.
 ## Stack
 
 Astro 7 (static) · Tailwind CSS v4 (CSS-first, tokens in `src/styles/global.css`) ·
-self-hosted **Manrope** variable font · `@astrojs/sitemap` · Cloudflare Pages Functions
+self-hosted **Comfortaa** variable font (bundled from the fontsource package, no CDN request) · `@astrojs/sitemap` · Cloudflare Pages Functions
 (`functions/api/contact.ts`, Postmark). Light-only, mobile-first, no JS framework.
 
 ## Local development
