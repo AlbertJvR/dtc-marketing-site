@@ -56,8 +56,16 @@ and `FounderCard` components render a labelled panel otherwise. Drop the files i
 |---|---|
 | `public/images/work/hutvista.png` | Hutvista bookings calendar (light theme, ~1600×1000, no customer data). Used on `/` and `/work`. |
 | `public/images/founder.png` | Square headshot for the founder block (footer, `/about`, `/contact`, `/`). |
-| `public/images/og-image.png` | 1200×630 social preview. A generated placeholder ships; replace when the brand is final. |
-| `public/favicon.svg`, `public/apple-touch-icon.png` | Camel mark placeholders. Replace together with `src/components/Logo.astro` when a real logo exists. |
+| `public/images/og-image.png` | 1200×630 social preview, generated from the logo (paper background, lockup, tagline). |
+
+## Logo and icons
+
+`public/logo.png` (lockup, 859×426, transparent) is what `Logo.astro` renders in the header
+and footer. `public/logo-mark.png` (icon only, 225×426) is the source for the favicon set:
+`favicon.ico` (16/32/48), `icon-192.png`, `icon-512.png` (transparent) and
+`apple-touch-icon.png` (180, white background — iOS doesn't support transparency). All were
+generated with Pillow from the PNGs; if the logo changes, replace the two source PNGs and
+regenerate the derived files (a larger mark export, ≥ 512 px tall, would sharpen the 512 icon).
 
 ## Environment variables
 
@@ -130,7 +138,6 @@ Every push to the production branch auto-deploys. Roll back via Pages → Deploy
 | `public/images/founder.png` | add the headshot |
 | `public/images/work/hutvista.png` | add a real Hutvista screenshot |
 | `/contact` copy | "usually within two working days" — adjust if that's not the promise you want to make |
-| Logo | replace the placeholder mark in `Logo.astro`, `favicon.svg`, `apple-touch-icon.png`, `og-image.png` when a real logo exists |
 
 ## Notes
 

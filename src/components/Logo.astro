@@ -1,27 +1,22 @@
 ---
 /**
- * Deploy the Camel wordmark. There is no drawn logo yet, so this is a typographic
- * lockup: a small camel-coloured mark plus the name in ink. When a real logo SVG
- * lands, replace the markup here (and the favicon in public/) — nothing else
- * references the mark.
+ * Deploy the Camel lockup (line-art camel + wordmark), served from public/logo.png
+ * (859×426, transparent). Size it with a height utility via `class`; width follows.
+ * The favicon set and the social image are generated from public/logo-mark.png and
+ * this file (see README → "Logo and icons").
  */
 interface Props {
+  /** Sizing classes, e.g. "h-12". Height controls the lockup size. */
   class?: string;
 }
 const { class: className } = Astro.props;
 ---
 
-<span class:list={['inline-flex items-center gap-2.5', className]}>
-  <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-brand-500" aria-hidden="true">
-    <svg viewBox="0 0 32 32" class="h-5 w-5 text-white" fill="currentColor">
-      <!-- Two humps on a base: the simplest honest camel. -->
-      <clipPath id="dtc-humps"><rect x="0" y="0" width="32" height="21" /></clipPath>
-      <g clip-path="url(#dtc-humps)">
-        <circle cx="11" cy="19" r="5" />
-        <circle cx="21" cy="17.5" r="6" />
-      </g>
-      <rect x="6" y="21" width="20" height="3" rx="1" />
-    </svg>
-  </span>
-  <span class="text-[17px] font-bold tracking-tight text-gray-900">Deploy the Camel</span>
-</span>
+<img
+  src="/logo.png"
+  alt="Deploy the Camel"
+  width="859"
+  height="426"
+  decoding="async"
+  class:list={['block h-12 w-auto', className]}
+/>

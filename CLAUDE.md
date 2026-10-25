@@ -17,16 +17,20 @@ This file is the design record. Add new decisions here; do not create separate p
    are the mobile menu and the contact form submit.
 2. **Env prefix is `DTC_`** (`DTC_SITE_URL`, `DTC_CONTACT_EMAIL`, `DTC_TURNSTILE_SITE_KEY`).
    Function secrets are unprefixed and read from `context.env` only.
-3. **Brand** — no logo or palette existed, so this site defines them:
+3. **Brand** — the palette and font were chosen for this site; the logo was supplied by the user on 2026-10-26:
    - Font: **Comfortaa** (variable, self-hosted via fontsource, weights 300–700; chosen
      2026-10-25, replacing Manrope). Not Outfit, to keep the studio visually
      distinct from Hutvista.
    - Palette: warm gray "paper" neutrals, **ink** (`gray-900`) for headings and primary
      buttons, **camel** (`brand-*`, `#b57a40` at 500) as a sparing accent (eyebrow labels,
      link underlines, small marks, focus ring). Camel is deliberately *not* the button colour.
-   - Logo: typographic lockup in `src/components/Logo.astro` (two-hump mark on a camel tile +
-     wordmark). `public/favicon.svg`, `apple-touch-icon.png` and `images/og-image.png` share
-     the geometry. All are placeholders to replace when a real logo exists.
+   - Logo (user-supplied 2026-10-26): line-art camel head with sunglasses + "DEPLOY / THE
+     CAMEL" wordmark, in `#46200a` (dark brown, now `brand-900`) and `#b57a40` (`brand-500`).
+     Source files are PNG only (`public/logo.png` 859×426 lockup, `public/logo-mark.png`
+     225×426 icon); the SVG exports were Inkscape wrappers around the same PNG and were
+     dropped. `favicon.ico` (16/32/48), `icon-192.png`, `icon-512.png`, `apple-touch-icon.png`
+     (white background) and `images/og-image.png` are generated from the PNGs with Pillow;
+     regenerate them if the logo changes.
    - Look: editorial rather than "SaaS template" — left-aligned, ruled sections, numbered
      tiers, generous whitespace, no gradients/blobs/glassmorphism/emoji icons, `rounded-xl`
      at most, borders over shadows.
